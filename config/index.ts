@@ -1,10 +1,12 @@
 import { defineConfig, type UserConfigExport } from '@tarojs/cli'
+import path from 'node:path'
+import UnoCSS from 'unocss/vite'
 
 import devConfig from './dev'
 import prodConfig from './prod'
 
 // https://taro-docs.jd.com/docs/next/config#defineconfig-辅助函数
-export default defineConfig<'vite'>(async (merge, { command, mode }) => {
+export default defineConfig<'vite'>(async (merge) => {
   const baseConfig: UserConfigExport<'vite'> = {
     projectName: 'beadhub',
     date: '2026-10-22',
@@ -17,6 +19,9 @@ export default defineConfig<'vite'>(async (merge, { command, mode }) => {
     },
     sourceRoot: 'src',
     outputRoot: 'dist',
+    alias: {
+      '@': path.resolve(__dirname, '..', 'src')
+    },
     plugins: [
       "@tarojs/plugin-generator"
     ],
@@ -29,7 +34,11 @@ export default defineConfig<'vite'>(async (merge, { command, mode }) => {
       }
     },
     framework: 'react',
-    compiler: 'vite',
+    // ⚠️ vitePlugins 必须放在 compiler 对象内部，放顶层会被静默忽略（uno.css 解析不到）
+    compiler: {
+      type: 'vite',
+      vitePlugins: [UnoCSS()]
+    },
     mini: {
       postcss: {
         pxtransform: {

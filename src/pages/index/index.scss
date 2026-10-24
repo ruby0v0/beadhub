@@ -1,0 +1,30 @@
+.hero {
+  background: linear-gradient(135deg, #fbe9e3, #fff 42%, #e3f1ee);
+}
+
+.hero .btn-primary {
+  margin-top: 24rpx;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16rpx;
+}
+
+.stat {
+  padding: 16rpx;
+  border-radius: 12rpx;
+  background: #f1ede6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.item {
+  padding: 20rpx 0;
+}
+
+.item + .item {
+  border-top: 1rpx solid #e4ded3;
+}

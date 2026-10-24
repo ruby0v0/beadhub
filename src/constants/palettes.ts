@@ -1,0 +1,382 @@
+/**
+ * MARD（摩达）配色库。
+ *
+ * 数据结构留了品牌扩展位：每颗豆子带 `brand`，`Palette` 带 `brandId`/`version`，
+ * 以后接 Perler / Hama / Artkal 只需要往 `PALETTES` 里再加一条，图纸侧不用改。
+ *
+ * 色值来源：MARD 官方标准色卡数据库（291 色全系，pindou.shanwchuan.cn 同步版）。
+ * 色号命名沿用官方编码：A/B/C/D/E/F/G/H/M/P/Q/R/T/Y 系列 + ZG 系列。
+ * `name` 先与 `code` 保持一致（官方中文名待补齐），UI 上按色号展示即可。
+ */
+
+export interface PaletteColor {
+  /** 官方色号，如 `A1` */
+  code: string
+  /** 展示名，暂时等于色号 */
+  name: string
+  /** `#RRGGBB` */
+  hex: string
+  /** 品牌 id，为多品牌扩展预留 */
+  brand: string
+}
+
+export interface Palette {
+  /** 图纸里锁定的色库版本，如 `mard-v1` */
+  id: string
+  brandId: string
+  brandName: string
+  /** 色库展示名 */
+  name: string
+  /** 色库版本号，色值有调整时递增，已存图纸仍指向老 id */
+  version: number
+  colors: PaletteColor[]
+}
+
+export const MARD_BRAND_ID = 'mard'
+export const MARD_BRAND_NAME = '摩达 MARD'
+export const MARD_PALETTE_ID = 'mard-v1'
+/** 单张图纸默认色库 */
+export const DEFAULT_PALETTE_ID = MARD_PALETTE_ID
+
+/** MARD 291 色全系色卡（按系列 + 序号排序） */
+export const MARD_COLORS: PaletteColor[] = [
+  { code: 'A1', name: 'A1', hex: '#FAF4C8', brand: 'mard' },
+  { code: 'A2', name: 'A2', hex: '#FFFFD5', brand: 'mard' },
+  { code: 'A3', name: 'A3', hex: '#FEFF8B', brand: 'mard' },
+  { code: 'A4', name: 'A4', hex: '#FBED56', brand: 'mard' },
+  { code: 'A5', name: 'A5', hex: '#F4D738', brand: 'mard' },
+  { code: 'A6', name: 'A6', hex: '#FEAC4C', brand: 'mard' },
+  { code: 'A7', name: 'A7', hex: '#FE8B4C', brand: 'mard' },
+  { code: 'A8', name: 'A8', hex: '#FFDA45', brand: 'mard' },
+  { code: 'A9', name: 'A9', hex: '#FF995B', brand: 'mard' },
+  { code: 'A10', name: 'A10', hex: '#F77C31', brand: 'mard' },
+  { code: 'A11', name: 'A11', hex: '#FFDD99', brand: 'mard' },
+  { code: 'A12', name: 'A12', hex: '#FE9F72', brand: 'mard' },
+  { code: 'A13', name: 'A13', hex: '#FFC365', brand: 'mard' },
+  { code: 'A14', name: 'A14', hex: '#FD543D', brand: 'mard' },
+  { code: 'A15', name: 'A15', hex: '#FFF365', brand: 'mard' },
+  { code: 'A16', name: 'A16', hex: '#FFFF9F', brand: 'mard' },
+  { code: 'A17', name: 'A17', hex: '#FFE36E', brand: 'mard' },
+  { code: 'A18', name: 'A18', hex: '#FEBE7D', brand: 'mard' },
+  { code: 'A19', name: 'A19', hex: '#FD7C72', brand: 'mard' },
+  { code: 'A20', name: 'A20', hex: '#FFD568', brand: 'mard' },
+  { code: 'A21', name: 'A21', hex: '#FFE395', brand: 'mard' },
+  { code: 'A22', name: 'A22', hex: '#F4F57D', brand: 'mard' },
+  { code: 'A23', name: 'A23', hex: '#E6C9B7', brand: 'mard' },
+  { code: 'A24', name: 'A24', hex: '#F7F8A2', brand: 'mard' },
+  { code: 'A25', name: 'A25', hex: '#FFD67D', brand: 'mard' },
+  { code: 'A26', name: 'A26', hex: '#FFC830', brand: 'mard' },
+  { code: 'B1', name: 'B1', hex: '#E6EE31', brand: 'mard' },
+  { code: 'B2', name: 'B2', hex: '#63F347', brand: 'mard' },
+  { code: 'B3', name: 'B3', hex: '#9EF780', brand: 'mard' },
+  { code: 'B4', name: 'B4', hex: '#5DE035', brand: 'mard' },
+  { code: 'B5', name: 'B5', hex: '#35E352', brand: 'mard' },
+  { code: 'B6', name: 'B6', hex: '#65E2A6', brand: 'mard' },
+  { code: 'B7', name: 'B7', hex: '#3DAF80', brand: 'mard' },
+  { code: 'B8', name: 'B8', hex: '#1C9C4F', brand: 'mard' },
+  { code: 'B9', name: 'B9', hex: '#27523A', brand: 'mard' },
+  { code: 'B10', name: 'B10', hex: '#95D3C2', brand: 'mard' },
+  { code: 'B11', name: 'B11', hex: '#5D722A', brand: 'mard' },
+  { code: 'B12', name: 'B12', hex: '#166F41', brand: 'mard' },
+  { code: 'B13', name: 'B13', hex: '#CAEB7B', brand: 'mard' },
+  { code: 'B14', name: 'B14', hex: '#ADE946', brand: 'mard' },
+  { code: 'B15', name: 'B15', hex: '#2E5132', brand: 'mard' },
+  { code: 'B16', name: 'B16', hex: '#C5ED9C', brand: 'mard' },
+  { code: 'B17', name: 'B17', hex: '#9BB13A', brand: 'mard' },
+  { code: 'B18', name: 'B18', hex: '#E6EE49', brand: 'mard' },
+  { code: 'B19', name: 'B19', hex: '#24B88C', brand: 'mard' },
+  { code: 'B20', name: 'B20', hex: '#C2F0CC', brand: 'mard' },
+  { code: 'B21', name: 'B21', hex: '#156A6B', brand: 'mard' },
+  { code: 'B22', name: 'B22', hex: '#0B3C43', brand: 'mard' },
+  { code: 'B23', name: 'B23', hex: '#303A21', brand: 'mard' },
+  { code: 'B24', name: 'B24', hex: '#EEFCA5', brand: 'mard' },
+  { code: 'B25', name: 'B25', hex: '#4E846D', brand: 'mard' },
+  { code: 'B26', name: 'B26', hex: '#8D7A35', brand: 'mard' },
+  { code: 'B27', name: 'B27', hex: '#CCE1AF', brand: 'mard' },
+  { code: 'B28', name: 'B28', hex: '#9EE5B9', brand: 'mard' },
+  { code: 'B29', name: 'B29', hex: '#C5E254', brand: 'mard' },
+  { code: 'B30', name: 'B30', hex: '#E2FCB1', brand: 'mard' },
+  { code: 'B31', name: 'B31', hex: '#B0E792', brand: 'mard' },
+  { code: 'B32', name: 'B32', hex: '#9CAB5A', brand: 'mard' },
+  { code: 'C1', name: 'C1', hex: '#E8FFE7', brand: 'mard' },
+  { code: 'C2', name: 'C2', hex: '#A9F9FC', brand: 'mard' },
+  { code: 'C3', name: 'C3', hex: '#A0E2FB', brand: 'mard' },
+  { code: 'C4', name: 'C4', hex: '#41CCFF', brand: 'mard' },
+  { code: 'C5', name: 'C5', hex: '#01ACEB', brand: 'mard' },
+  { code: 'C6', name: 'C6', hex: '#50AAF0', brand: 'mard' },
+  { code: 'C7', name: 'C7', hex: '#3677D2', brand: 'mard' },
+  { code: 'C8', name: 'C8', hex: '#0F54C0', brand: 'mard' },
+  { code: 'C9', name: 'C9', hex: '#324BCA', brand: 'mard' },
+  { code: 'C10', name: 'C10', hex: '#3EBCE2', brand: 'mard' },
+  { code: 'C11', name: 'C11', hex: '#28DDDE', brand: 'mard' },
+  { code: 'C12', name: 'C12', hex: '#1C334D', brand: 'mard' },
+  { code: 'C13', name: 'C13', hex: '#CDE8FF', brand: 'mard' },
+  { code: 'C14', name: 'C14', hex: '#D5FDFF', brand: 'mard' },
+  { code: 'C15', name: 'C15', hex: '#22C4C6', brand: 'mard' },
+  { code: 'C16', name: 'C16', hex: '#1557A8', brand: 'mard' },
+  { code: 'C17', name: 'C17', hex: '#04D1F6', brand: 'mard' },
+  { code: 'C18', name: 'C18', hex: '#1D3344', brand: 'mard' },
+  { code: 'C19', name: 'C19', hex: '#1887A2', brand: 'mard' },
+  { code: 'C20', name: 'C20', hex: '#176DAF', brand: 'mard' },
+  { code: 'C21', name: 'C21', hex: '#BEDDFF', brand: 'mard' },
+  { code: 'C22', name: 'C22', hex: '#67B4BE', brand: 'mard' },
+  { code: 'C23', name: 'C23', hex: '#C8E2FF', brand: 'mard' },
+  { code: 'C24', name: 'C24', hex: '#7CC4FF', brand: 'mard' },
+  { code: 'C25', name: 'C25', hex: '#A9E5E5', brand: 'mard' },
+  { code: 'C26', name: 'C26', hex: '#3CAED8', brand: 'mard' },
+  { code: 'C27', name: 'C27', hex: '#D3DFFA', brand: 'mard' },
+  { code: 'C28', name: 'C28', hex: '#BBCFED', brand: 'mard' },
+  { code: 'C29', name: 'C29', hex: '#34488E', brand: 'mard' },
+  { code: 'D1', name: 'D1', hex: '#AEB4F2', brand: 'mard' },
+  { code: 'D2', name: 'D2', hex: '#858EDD', brand: 'mard' },
+  { code: 'D3', name: 'D3', hex: '#2F54AF', brand: 'mard' },
+  { code: 'D4', name: 'D4', hex: '#182A84', brand: 'mard' },
+  { code: 'D5', name: 'D5', hex: '#B843C5', brand: 'mard' },
+  { code: 'D6', name: 'D6', hex: '#AC7BDE', brand: 'mard' },
+  { code: 'D7', name: 'D7', hex: '#8854B3', brand: 'mard' },
+  { code: 'D8', name: 'D8', hex: '#E2D3FF', brand: 'mard' },
+  { code: 'D9', name: 'D9', hex: '#D5B9F8', brand: 'mard' },
+  { code: 'D10', name: 'D10', hex: '#361851', brand: 'mard' },
+  { code: 'D11', name: 'D11', hex: '#B9BAE1', brand: 'mard' },
+  { code: 'D12', name: 'D12', hex: '#DE9AD4', brand: 'mard' },
+  { code: 'D13', name: 'D13', hex: '#B90095', brand: 'mard' },
+  { code: 'D14', name: 'D14', hex: '#8B279B', brand: 'mard' },
+  { code: 'D15', name: 'D15', hex: '#2F1F90', brand: 'mard' },
+  { code: 'D16', name: 'D16', hex: '#E3E1EE', brand: 'mard' },
+  { code: 'D17', name: 'D17', hex: '#C4D4F6', brand: 'mard' },
+  { code: 'D18', name: 'D18', hex: '#A45EC7', brand: 'mard' },
+  { code: 'D19', name: 'D19', hex: '#D8C3D7', brand: 'mard' },
+  { code: 'D20', name: 'D20', hex: '#9C32B2', brand: 'mard' },
+  { code: 'D21', name: 'D21', hex: '#9A009B', brand: 'mard' },
+  { code: 'D22', name: 'D22', hex: '#333A95', brand: 'mard' },
+  { code: 'D23', name: 'D23', hex: '#EBDAFC', brand: 'mard' },
+  { code: 'D24', name: 'D24', hex: '#7786E5', brand: 'mard' },
+  { code: 'D25', name: 'D25', hex: '#494FC7', brand: 'mard' },
+  { code: 'D26', name: 'D26', hex: '#DFC2F8', brand: 'mard' },
+  { code: 'E1', name: 'E1', hex: '#FDD3CC', brand: 'mard' },
+  { code: 'E2', name: 'E2', hex: '#FEC0DF', brand: 'mard' },
+  { code: 'E3', name: 'E3', hex: '#FFB7E7', brand: 'mard' },
+  { code: 'E4', name: 'E4', hex: '#E8649E', brand: 'mard' },
+  { code: 'E5', name: 'E5', hex: '#F551A2', brand: 'mard' },
+  { code: 'E6', name: 'E6', hex: '#F13D74', brand: 'mard' },
+  { code: 'E7', name: 'E7', hex: '#C63478', brand: 'mard' },
+  { code: 'E8', name: 'E8', hex: '#FFDBE9', brand: 'mard' },
+  { code: 'E9', name: 'E9', hex: '#E970CC', brand: 'mard' },
+  { code: 'E10', name: 'E10', hex: '#D33793', brand: 'mard' },
+  { code: 'E11', name: 'E11', hex: '#FCDDD2', brand: 'mard' },
+  { code: 'E12', name: 'E12', hex: '#F78FC3', brand: 'mard' },
+  { code: 'E13', name: 'E13', hex: '#B5006D', brand: 'mard' },
+  { code: 'E14', name: 'E14', hex: '#FFD1BA', brand: 'mard' },
+  { code: 'E15', name: 'E15', hex: '#F8C7C9', brand: 'mard' },
+  { code: 'E16', name: 'E16', hex: '#FFF3EB', brand: 'mard' },
+  { code: 'E17', name: 'E17', hex: '#FFE2EA', brand: 'mard' },
+  { code: 'E18', name: 'E18', hex: '#FFC7DB', brand: 'mard' },
+  { code: 'E19', name: 'E19', hex: '#FEBAD5', brand: 'mard' },
+  { code: 'E20', name: 'E20', hex: '#D8C7D1', brand: 'mard' },
+  { code: 'E21', name: 'E21', hex: '#BD9DA1', brand: 'mard' },
+  { code: 'E22', name: 'E22', hex: '#B785A1', brand: 'mard' },
+  { code: 'E23', name: 'E23', hex: '#937A8D', brand: 'mard' },
+  { code: 'E24', name: 'E24', hex: '#E1BCE8', brand: 'mard' },
+  { code: 'F1', name: 'F1', hex: '#FD957B', brand: 'mard' },
+  { code: 'F2', name: 'F2', hex: '#FC3D46', brand: 'mard' },
+  { code: 'F3', name: 'F3', hex: '#F74941', brand: 'mard' },
+  { code: 'F4', name: 'F4', hex: '#FC283C', brand: 'mard' },
+  { code: 'F5', name: 'F5', hex: '#E7002F', brand: 'mard' },
+  { code: 'F6', name: 'F6', hex: '#943630', brand: 'mard' },
+  { code: 'F7', name: 'F7', hex: '#971937', brand: 'mard' },
+  { code: 'F8', name: 'F8', hex: '#BC0028', brand: 'mard' },
+  { code: 'F9', name: 'F9', hex: '#E2677A', brand: 'mard' },
+  { code: 'F10', name: 'F10', hex: '#8A4526', brand: 'mard' },
+  { code: 'F11', name: 'F11', hex: '#5A2121', brand: 'mard' },
+  { code: 'F12', name: 'F12', hex: '#FD4E6A', brand: 'mard' },
+  { code: 'F13', name: 'F13', hex: '#F35744', brand: 'mard' },
+  { code: 'F14', name: 'F14', hex: '#FFA9AD', brand: 'mard' },
+  { code: 'F15', name: 'F15', hex: '#D30022', brand: 'mard' },
+  { code: 'F16', name: 'F16', hex: '#FEC2A6', brand: 'mard' },
+  { code: 'F17', name: 'F17', hex: '#E69C79', brand: 'mard' },
+  { code: 'F18', name: 'F18', hex: '#D37C46', brand: 'mard' },
+  { code: 'F19', name: 'F19', hex: '#C1444A', brand: 'mard' },
+  { code: 'F20', name: 'F20', hex: '#CD9391', brand: 'mard' },
+  { code: 'F21', name: 'F21', hex: '#F7B4C6', brand: 'mard' },
+  { code: 'F22', name: 'F22', hex: '#FDC0D0', brand: 'mard' },
+  { code: 'F23', name: 'F23', hex: '#F67E66', brand: 'mard' },
+  { code: 'F24', name: 'F24', hex: '#E698AA', brand: 'mard' },
+  { code: 'F25', name: 'F25', hex: '#E54B4F', brand: 'mard' },
+  { code: 'G1', name: 'G1', hex: '#FFE2CE', brand: 'mard' },
+  { code: 'G2', name: 'G2', hex: '#FFC4AA', brand: 'mard' },
+  { code: 'G3', name: 'G3', hex: '#F4C3A5', brand: 'mard' },
+  { code: 'G4', name: 'G4', hex: '#E1B383', brand: 'mard' },
+  { code: 'G5', name: 'G5', hex: '#EDB045', brand: 'mard' },
+  { code: 'G6', name: 'G6', hex: '#E99C17', brand: 'mard' },
+  { code: 'G7', name: 'G7', hex: '#9D5B3E', brand: 'mard' },
+  { code: 'G8', name: 'G8', hex: '#753832', brand: 'mard' },
+  { code: 'G9', name: 'G9', hex: '#E6B483', brand: 'mard' },
+  { code: 'G10', name: 'G10', hex: '#D98C39', brand: 'mard' },
+  { code: 'G11', name: 'G11', hex: '#E0C593', brand: 'mard' },
+  { code: 'G12', name: 'G12', hex: '#FFC890', brand: 'mard' },
+  { code: 'G13', name: 'G13', hex: '#B7714A', brand: 'mard' },
+  { code: 'G14', name: 'G14', hex: '#8D614C', brand: 'mard' },
+  { code: 'G15', name: 'G15', hex: '#FCF9E0', brand: 'mard' },
+  { code: 'G16', name: 'G16', hex: '#F2D9BA', brand: 'mard' },
+  { code: 'G17', name: 'G17', hex: '#78524B', brand: 'mard' },
+  { code: 'G18', name: 'G18', hex: '#FFE4CC', brand: 'mard' },
+  { code: 'G19', name: 'G19', hex: '#E07935', brand: 'mard' },
+  { code: 'G20', name: 'G20', hex: '#A94023', brand: 'mard' },
+  { code: 'G21', name: 'G21', hex: '#B88558', brand: 'mard' },
+  { code: 'H1', name: 'H1', hex: '#FDFBFF', brand: 'mard' },
+  { code: 'H2', name: 'H2', hex: '#FEFFFF', brand: 'mard' },
+  { code: 'H3', name: 'H3', hex: '#B6B1BA', brand: 'mard' },
+  { code: 'H4', name: 'H4', hex: '#89858C', brand: 'mard' },
+  { code: 'H5', name: 'H5', hex: '#48464E', brand: 'mard' },
+  { code: 'H6', name: 'H6', hex: '#2F2B2F', brand: 'mard' },
+  { code: 'H7', name: 'H7', hex: '#000000', brand: 'mard' },
+  { code: 'H8', name: 'H8', hex: '#E7D6DB', brand: 'mard' },
+  { code: 'H9', name: 'H9', hex: '#EDEDED', brand: 'mard' },
+  { code: 'H10', name: 'H10', hex: '#EEE9EA', brand: 'mard' },
+  { code: 'H11', name: 'H11', hex: '#CECDD5', brand: 'mard' },
+  { code: 'H12', name: 'H12', hex: '#FFF5ED', brand: 'mard' },
+  { code: 'H13', name: 'H13', hex: '#F5ECD2', brand: 'mard' },
+  { code: 'H14', name: 'H14', hex: '#CFD7D3', brand: 'mard' },
+  { code: 'H15', name: 'H15', hex: '#98A6A8', brand: 'mard' },
+  { code: 'H16', name: 'H16', hex: '#1D1414', brand: 'mard' },
+  { code: 'H17', name: 'H17', hex: '#F1EDED', brand: 'mard' },
+  { code: 'H18', name: 'H18', hex: '#FFFDF0', brand: 'mard' },
+  { code: 'H19', name: 'H19', hex: '#F6EFE2', brand: 'mard' },
+  { code: 'H20', name: 'H20', hex: '#949FA3', brand: 'mard' },
+  { code: 'H21', name: 'H21', hex: '#FFFBE1', brand: 'mard' },
+  { code: 'H22', name: 'H22', hex: '#CACAD4', brand: 'mard' },
+  { code: 'H23', name: 'H23', hex: '#9A9D94', brand: 'mard' },
+  { code: 'M1', name: 'M1', hex: '#BCC6B8', brand: 'mard' },
+  { code: 'M2', name: 'M2', hex: '#8AA386', brand: 'mard' },
+  { code: 'M3', name: 'M3', hex: '#697D80', brand: 'mard' },
+  { code: 'M4', name: 'M4', hex: '#E3D2BC', brand: 'mard' },
+  { code: 'M5', name: 'M5', hex: '#D0CCAA', brand: 'mard' },
+  { code: 'M6', name: 'M6', hex: '#B0A782', brand: 'mard' },
+  { code: 'M7', name: 'M7', hex: '#B4A497', brand: 'mard' },
+  { code: 'M8', name: 'M8', hex: '#B38281', brand: 'mard' },
+  { code: 'M9', name: 'M9', hex: '#A58767', brand: 'mard' },
+  { code: 'M10', name: 'M10', hex: '#C5B2BC', brand: 'mard' },
+  { code: 'M11', name: 'M11', hex: '#9F7594', brand: 'mard' },
+  { code: 'M12', name: 'M12', hex: '#644749', brand: 'mard' },
+  { code: 'M13', name: 'M13', hex: '#D19066', brand: 'mard' },
+  { code: 'M14', name: 'M14', hex: '#C77362', brand: 'mard' },
+  { code: 'M15', name: 'M15', hex: '#757D78', brand: 'mard' },
+  { code: 'P1', name: 'P1', hex: '#FCF7F8', brand: 'mard' },
+  { code: 'P2', name: 'P2', hex: '#B0A9AC', brand: 'mard' },
+  { code: 'P3', name: 'P3', hex: '#AFDCAB', brand: 'mard' },
+  { code: 'P4', name: 'P4', hex: '#FEA49F', brand: 'mard' },
+  { code: 'P5', name: 'P5', hex: '#EE8C3E', brand: 'mard' },
+  { code: 'P6', name: 'P6', hex: '#5FD0A7', brand: 'mard' },
+  { code: 'P7', name: 'P7', hex: '#EB9270', brand: 'mard' },
+  { code: 'P8', name: 'P8', hex: '#F0D958', brand: 'mard' },
+  { code: 'P9', name: 'P9', hex: '#D9D9D9', brand: 'mard' },
+  { code: 'P10', name: 'P10', hex: '#D9C7EA', brand: 'mard' },
+  { code: 'P11', name: 'P11', hex: '#F3ECC9', brand: 'mard' },
+  { code: 'P12', name: 'P12', hex: '#E6EEF2', brand: 'mard' },
+  { code: 'P13', name: 'P13', hex: '#AACBEF', brand: 'mard' },
+  { code: 'P14', name: 'P14', hex: '#337680', brand: 'mard' },
+  { code: 'P15', name: 'P15', hex: '#668575', brand: 'mard' },
+  { code: 'P16', name: 'P16', hex: '#FEBF45', brand: 'mard' },
+  { code: 'P17', name: 'P17', hex: '#FEA324', brand: 'mard' },
+  { code: 'P18', name: 'P18', hex: '#FEB89F', brand: 'mard' },
+  { code: 'P19', name: 'P19', hex: '#FFFEEC', brand: 'mard' },
+  { code: 'P20', name: 'P20', hex: '#FEBECF', brand: 'mard' },
+  { code: 'P21', name: 'P21', hex: '#ECBEBF', brand: 'mard' },
+  { code: 'P22', name: 'P22', hex: '#E4A89F', brand: 'mard' },
+  { code: 'P23', name: 'P23', hex: '#A56268', brand: 'mard' },
+  { code: 'Q1', name: 'Q1', hex: '#F2A5E8', brand: 'mard' },
+  { code: 'Q2', name: 'Q2', hex: '#E9EC91', brand: 'mard' },
+  { code: 'Q3', name: 'Q3', hex: '#FFFF00', brand: 'mard' },
+  { code: 'Q4', name: 'Q4', hex: '#FFEBFA', brand: 'mard' },
+  { code: 'Q5', name: 'Q5', hex: '#76CEDE', brand: 'mard' },
+  { code: 'R1', name: 'R1', hex: '#D50D21', brand: 'mard' },
+  { code: 'R2', name: 'R2', hex: '#F92F83', brand: 'mard' },
+  { code: 'R3', name: 'R3', hex: '#FD8324', brand: 'mard' },
+  { code: 'R4', name: 'R4', hex: '#F8EC31', brand: 'mard' },
+  { code: 'R5', name: 'R5', hex: '#35C75B', brand: 'mard' },
+  { code: 'R6', name: 'R6', hex: '#238891', brand: 'mard' },
+  { code: 'R7', name: 'R7', hex: '#19779D', brand: 'mard' },
+  { code: 'R8', name: 'R8', hex: '#1A60C3', brand: 'mard' },
+  { code: 'R9', name: 'R9', hex: '#9A56B4', brand: 'mard' },
+  { code: 'R10', name: 'R10', hex: '#FFDB4C', brand: 'mard' },
+  { code: 'R11', name: 'R11', hex: '#FFEBFA', brand: 'mard' },
+  { code: 'R12', name: 'R12', hex: '#D8D5CE', brand: 'mard' },
+  { code: 'R13', name: 'R13', hex: '#55514C', brand: 'mard' },
+  { code: 'R14', name: 'R14', hex: '#9FE4DF', brand: 'mard' },
+  { code: 'R15', name: 'R15', hex: '#77CEE9', brand: 'mard' },
+  { code: 'R16', name: 'R16', hex: '#3ECFCA', brand: 'mard' },
+  { code: 'R17', name: 'R17', hex: '#4A867A', brand: 'mard' },
+  { code: 'R18', name: 'R18', hex: '#7FCD9D', brand: 'mard' },
+  { code: 'R19', name: 'R19', hex: '#CDE55D', brand: 'mard' },
+  { code: 'R20', name: 'R20', hex: '#E8C7B4', brand: 'mard' },
+  { code: 'R21', name: 'R21', hex: '#AD6F3C', brand: 'mard' },
+  { code: 'R22', name: 'R22', hex: '#6C372F', brand: 'mard' },
+  { code: 'R23', name: 'R23', hex: '#FEB872', brand: 'mard' },
+  { code: 'R24', name: 'R24', hex: '#F3C1C0', brand: 'mard' },
+  { code: 'R25', name: 'R25', hex: '#C9675E', brand: 'mard' },
+  { code: 'R26', name: 'R26', hex: '#D293BE', brand: 'mard' },
+  { code: 'R27', name: 'R27', hex: '#EA8CB1', brand: 'mard' },
+  { code: 'R28', name: 'R28', hex: '#9C87D6', brand: 'mard' },
+  { code: 'T1', name: 'T1', hex: '#FFFFFF', brand: 'mard' },
+  { code: 'Y1', name: 'Y1', hex: '#FD6FB4', brand: 'mard' },
+  { code: 'Y2', name: 'Y2', hex: '#FEB481', brand: 'mard' },
+  { code: 'Y3', name: 'Y3', hex: '#D7FAA0', brand: 'mard' },
+  { code: 'Y4', name: 'Y4', hex: '#8BDBFA', brand: 'mard' },
+  { code: 'Y5', name: 'Y5', hex: '#E987EA', brand: 'mard' },
+  { code: 'ZG1', name: 'ZG1', hex: '#DAABB3', brand: 'mard' },
+  { code: 'ZG2', name: 'ZG2', hex: '#D6AA87', brand: 'mard' },
+  { code: 'ZG3', name: 'ZG3', hex: '#C1BD8D', brand: 'mard' },
+  { code: 'ZG4', name: 'ZG4', hex: '#96869F', brand: 'mard' },
+  { code: 'ZG5', name: 'ZG5', hex: '#8490A6', brand: 'mard' },
+  { code: 'ZG6', name: 'ZG6', hex: '#94BFE2', brand: 'mard' },
+  { code: 'ZG7', name: 'ZG7', hex: '#E2A9D2', brand: 'mard' },
+  { code: 'ZG8', name: 'ZG8', hex: '#AB91C0', brand: 'mard' },
+]
+
+export const PALETTES: Record<string, Palette> = {
+  [MARD_PALETTE_ID]: {
+    id: MARD_PALETTE_ID,
+    brandId: MARD_BRAND_ID,
+    brandName: MARD_BRAND_NAME,
+    name: 'MARD 291 色',
+    version: 1,
+    colors: MARD_COLORS,
+  },
+}
+
+/** 色号前缀（A/B/.../ZG），用于色库页分组浏览 */
+export function seriesOf(code: string): string {
+  const m = /^([A-Z]+)/.exec(code)
+  return m ? m[1] : '#'
+}
+
+export function getPalette(paletteId: string = DEFAULT_PALETTE_ID): Palette {
+  return PALETTES[paletteId] || PALETTES[DEFAULT_PALETTE_ID]
+}
+
+export function getPaletteColors(paletteId?: string): PaletteColor[] {
+  return getPalette(paletteId).colors
+}
+
+/** 色板索引 → 色号；越界返回 undefined（-1 表示空格） */
+export function getPaletteColor(paletteId: string | undefined, index: number): PaletteColor | undefined {
+  if (index < 0) return undefined
+  return getPalette(paletteId).colors[index]
+}
+
+/** 色号 → 色板索引，找不到返回 -1 */
+export function indexOfCode(paletteId: string | undefined, code: string): number {
+  return getPalette(paletteId).colors.findIndex(c => c.code === code)
+}
+
+/** 按前缀分组，供色库页 section 渲染 */
+export function groupBySeries(colors: PaletteColor[] = MARD_COLORS): { series: string; colors: PaletteColor[] }[] {
+  const map = new Map<string, PaletteColor[]>()
+  for (const c of colors) {
+    const s = seriesOf(c.code)
+    const bucket = map.get(s)
+    if (bucket) bucket.push(c)
+    else map.set(s, [c])
+  }
+  return [...map.entries()].map(([series, list]) => ({ series, colors: list }))
+}
